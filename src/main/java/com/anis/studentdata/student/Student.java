@@ -15,5 +15,5 @@ public class Student {
     private final String lastName;
     private final String email;
     private final Gender gender;
-    
+
 }
