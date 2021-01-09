@@ -1,6 +1,7 @@
 package com.anis.studentdata.student;
 
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,15 +15,13 @@ import static com.anis.studentdata.student.Gender.*;
 @RequestMapping("/students")
 @RestController
 @CrossOrigin("*")
+@RequiredArgsConstructor
 public class StudentController {
 
-    List<Student> studentList = List.of(
-      new Student(UUID.randomUUID(),"Anis  ","Medini","Anis@gmail.com", MALE),
-      new Student(UUID.randomUUID(),"Roza","Medini","Roza@gmail.com", FEMALE)
-    );
+   private final StudentService studentService;
 
     @GetMapping
     public List<Student> students (){
-        return studentList;
+        return studentService.getStudentList();
     }
 }
