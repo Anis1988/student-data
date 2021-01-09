@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+.spinner {
+  text-align: center;
+  border-radius: 4px;
+  margin-top: 45px;
+  padding: 30px 50px;
+  margin: 20px 0;
+  font-size: 89;
+}

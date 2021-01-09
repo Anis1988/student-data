@@ -1,26 +1,39 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import { Table } from "antd";
+import { Table, Avatar, Spin } from "antd";
 import Container from "./Container";
 import { getAllStudents } from "./Client";
 function App() {
   const [state, setState] = useState({
+    isLoading: false,
     students: [],
   });
 
   useEffect(() => {
+    setState({ isLoading: true });
+
     getAllStudents().then((res) =>
       res.json().then((students) => {
         setState({
           students,
+          isLoading: false,
         });
       })
     );
   }, []);
-  console.log(state.students.length);
 
   if (state.students && state.students.length) {
     const columns = [
+      {
+        title: "",
+        key: "Avatar",
+        render: (text, student) => (
+          <Avatar size="large">
+            {`${student.firstName.charAt(0).toUpperCase()}
+              ${student.lastName.charAt(0).toUpperCase()}`}
+          </Avatar>
+        ),
+      },
       {
         title: "Student Id",
         dataIndex: "studentId",
@@ -58,7 +71,13 @@ function App() {
       </Container>
     );
   } else {
-    return <h1>Nothing here</h1>;
+    return (
+      <div className="spinner">
+        <Container>
+          <Spin />;
+        </Container>
+      </div>
+    );
   }
 }
 
