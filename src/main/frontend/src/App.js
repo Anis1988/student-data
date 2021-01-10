@@ -3,7 +3,13 @@ import React, { useEffect, useState } from "react";
 import { Table, Avatar, Spin } from "antd";
 import Container from "./Container";
 import { getAllStudents } from "./Client";
+import Footer from "./Footer";
+import { Modal } from "antd";
+import AddStudentForm from "./forms/AddStudentForm";
+import axios from "axios";
+
 function App() {
+  const [modal, setModal] = useState(false);
   const [state, setState] = useState({
     isLoading: false,
     students: [],
@@ -21,6 +27,9 @@ function App() {
       })
     );
   }, []);
+
+  const openAddStudentModal = () => setModal(true);
+  const closeAddStudentModal = () => setModal(false);
 
   if (state.students && state.students.length) {
     const columns = [
@@ -65,8 +74,26 @@ function App() {
         <Table
           dataSource={state.students}
           columns={columns}
-          rowKey={state.studentId}
+          rowKey={state.students.studentId}
           pagination={false}
+        />
+        <Modal
+          title="Add New Student"
+          visible={modal}
+          onOk={() => closeAddStudentModal()}
+          onCancel={() => closeAddStudentModal()}
+          width={1000}
+        >
+          <AddStudentForm
+            onSuccess={() => {
+              closeAddStudentModal();
+              window.location.reload(true);
+            }}
+          />
+        </Modal>
+        <Footer
+          numberOfStudents={state.students.length}
+          handleOpen={openAddStudentModal}
         />
       </Container>
     );

@@ -14,10 +14,24 @@ public class StudentDatabase {
 
     private final JdbcTemplate jdbcTemplate;
 
+     int insertStudent(UUID studentId, Student student) {
+        String sql = " INSERT INTO students (student_id, first_name, last_name ,email, gender ) VALUES (?, ?, ?, ?, ?)";
+        return jdbcTemplate.update(sql, studentId,
+                student.getFirstName(),
+                student.getLastName(),
+                student.getEmail(),
+                student.getGender().name().toUpperCase());
+
+    }
+
+
+
     public List<Student> selectAllStudents(){
         String sql = " SELECT  student_Id, first_name, last_name, email, gender  FROM students";
+
         return jdbcTemplate.query(sql, mapStudentFromDB());
     }
+
 
     private RowMapper<Student> mapStudentFromDB() {
         return (resultSet, i) -> {

@@ -2,15 +2,9 @@ package com.anis.studentdata.student;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
-
-import static com.anis.studentdata.student.Gender.*;
 
 @RequestMapping("/students")
 @RestController
@@ -23,5 +17,9 @@ public class StudentController {
     @GetMapping
     public List<Student> students (){
         return studentService.getStudentList();
+    }
+    @PostMapping
+    public void addNewStudent (@RequestBody Student student){
+        studentService.addNewStudent(student);
     }
 }
