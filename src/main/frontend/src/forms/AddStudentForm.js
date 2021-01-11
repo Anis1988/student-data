@@ -4,7 +4,7 @@ import { Input, Button, Tag } from "antd";
 import "./AddStudentForm.css";
 import { addNewStudent } from "../Client";
 
-const AddStudentForm = ({ onSuccess }) => (
+const AddStudentForm = ({ onSuccess, onFailure }) => (
   <Formik
     initialValues={{ firstName: "", lastName: "", email: "", gender: "" }}
     validate={(values) => {
@@ -36,10 +36,10 @@ const AddStudentForm = ({ onSuccess }) => (
       return errors;
     }}
     onSubmit={(student, { setSubmitting }) => {
-      addNewStudent(student).then(() => {
-        onSuccess();
-        setSubmitting(false);
-      });
+      addNewStudent(student)
+        .then(() => onSuccess())
+        .catch((err) => onFailure(err))
+        .finally(() => setSubmitting(false));
     }}
   >
     {({

@@ -1,12 +1,11 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import { Table, Avatar, Spin } from "antd";
+import { Table, Avatar, Spin, Empty, Modal } from "antd";
 import Container from "./Container";
 import { getAllStudents } from "./Client";
 import Footer from "./Footer";
-import { Modal } from "antd";
+import { errorNotification } from "./Notification";
 import AddStudentForm from "./forms/AddStudentForm";
-import axios from "axios";
 
 function App() {
   const [modal, setModal] = useState(false);
@@ -17,15 +16,21 @@ function App() {
 
   useEffect(() => {
     setState({ isLoading: true });
-
-    getAllStudents().then((res) =>
-      res.json().then((students) => {
-        setState({
-          students,
-          isLoading: false,
-        });
-      })
-    );
+    getAllStudents()
+      .then((res) =>
+        res.json().then((students) => {
+          setState({
+            students,
+            isLoading: false,
+          });
+        })
+      )
+      .catch((error) => {
+        const message = error.error.message;
+        const httpStatus = error.error.httpStatus;
+        errorNotification(message, httpStatus);
+        setState({ isLoading: false });
+      });
   }, []);
 
   const openAddStudentModal = () => setModal(true);
@@ -89,6 +94,11 @@ function App() {
               closeAddStudentModal();
               window.location.reload(true);
             }}
+            onFailure={(err) => {
+              const message = err.error.message;
+              const description = err.error.httpStatus;
+              errorNotification(message, description);
+            }}
           />
         </Modal>
         <Footer
@@ -97,13 +107,38 @@ function App() {
         />
       </Container>
     );
-  } else {
+  }
+  if (state.isLoading) {
     return (
       <div className="spinner">
         <Container>
-          <Spin />;
+          <Spin />
         </Container>
       </div>
+    );
+  } else {
+    return (
+      <Container>
+        <Empty description={<h1>No Students Found</h1>} />
+        <Modal
+          title="Add New Student"
+          visible={modal}
+          onOk={() => closeAddStudentModal()}
+          onCancel={() => closeAddStudentModal()}
+          width={1000}
+        >
+          <AddStudentForm
+            onSuccess={() => {
+              closeAddStudentModal();
+              window.location.reload(true);
+            }}
+          />
+        </Modal>
+        <Footer
+          numberOfStudents={state.students?.length}
+          handleOpen={openAddStudentModal}
+        />
+      </Container>
     );
   }
 }

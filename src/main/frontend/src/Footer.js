@@ -8,7 +8,7 @@ const Footer = ({ numberOfStudents, handleOpen }) => {
   return (
     <div className="footer">
       <Container>
-        {numberOfStudents ? (
+        {numberOfStudents !== undefined ? (
           <Avatar
             style={{ backgroundColor: "orange", marginRight: "10px" }}
             size="large"

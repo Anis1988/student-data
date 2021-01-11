@@ -4,6 +4,7 @@ package com.anis.studentdata.student;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping("/students")
@@ -16,10 +17,11 @@ public class StudentController {
 
     @GetMapping
     public List<Student> students (){
+//        throw  new ApiRequestException("Cannot Get All Students  ");
         return studentService.getStudentList();
     }
     @PostMapping
-    public void addNewStudent (@RequestBody Student student){
+    public void addNewStudent (@RequestBody @Valid Student student){
         studentService.addNewStudent(student);
     }
 }
