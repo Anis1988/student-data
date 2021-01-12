@@ -4,6 +4,7 @@ import com.anis.studentdata.EmailValidator;
 import com.anis.studentdata.exception.ApiRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,9 @@ public class StudentService {
 
     public List<Student> getStudentList() {
         return studentDatabase.selectAllStudents();
+    }
+    public Student getOneStudent(UUID studentId) {
+        return studentDatabase.getJustOne(studentId);
     }
 
     void addNewStudent(Student student) {
@@ -38,4 +42,32 @@ public class StudentService {
 
     }
 
+    public void removeStudent(UUID studentId) {
+        studentDatabase.deleteStd(studentId);
+    }
+
+    public void editStudent(UUID studentId, Student student) {
+        Optional.ofNullable(student.getEmail())
+                .ifPresent(email -> {
+                    boolean taken = studentDatabase.isEmailTaken(email);
+                    if (!taken)
+                        studentDatabase.updateEmail( studentId,email);
+                    else
+                        throw new ApiRequestException("Email already taken "+ student.getEmail());
+                } );
+        Optional.ofNullable(student.getFirstName())
+                .filter(firstName -> !StringUtils.isEmpty(firstName))
+                .map(StringUtils::capitalize)
+                .ifPresent(firstName -> studentDatabase.updateFirstName(studentId,firstName));
+
+        Optional.ofNullable(student.getLastName())
+                .filter(lastName -> !StringUtils.isEmpty(lastName))
+                .map(StringUtils::capitalize)
+                .ifPresent(lastName -> studentDatabase.updateLastName(studentId,lastName));
+    }
+
+
+    public List<StudentCourse> getAllStudentsAndCourses(UUID studentId) {
+        return studentDatabase.getAlltheStudentAndCourse( studentId);
+    }
 }

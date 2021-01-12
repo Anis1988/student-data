@@ -6,15 +6,18 @@ import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.UUID;
-
 
 @RequiredArgsConstructor
 @Getter
-public class Student {
+public class StudentCourse {
 
     @JsonProperty("studentId")
     private final UUID studentId;
+
+    @JsonProperty("courseId")
+    private final UUID courseId;
 
     @NotBlank
     @JsonProperty("firstName")
@@ -32,14 +35,19 @@ public class Student {
     @JsonProperty("gender")
     private final Gender gender;
 
-    @Override
-    public String toString() {
-        return "Student{" +
-                "studentId=" + studentId +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", gender=" + gender +
-                '}';
-    }
+
+    private final LocalDate startDate;
+    private final LocalDate endDate;
+    @JsonProperty("grade")
+    private final Integer grade;
+
+    @JsonProperty("name")
+    private final String name;
+
+    @JsonProperty("description")
+    private final String description;
+    @JsonProperty("department")
+    private  final String department;
+    @JsonProperty("teacherName")
+    private  final String teacherName;
 }
