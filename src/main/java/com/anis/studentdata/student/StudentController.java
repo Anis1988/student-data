@@ -1,6 +1,7 @@
 package com.anis.studentdata.student;
 
 
+import com.anis.studentdata.exception.ApiRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
