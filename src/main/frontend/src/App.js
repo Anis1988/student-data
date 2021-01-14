@@ -17,7 +17,7 @@ function App() {
   const [modalEdit, setModalEdit] = useState(false);
   const [view, setView] = useState(false);
 
-  const [singleStudent, setSingleStudent] = useState({});
+  const [singleStudent, setSingleStudent] = useState([]);
   const [studentsCourses, setStudentsCourses] = useState([]);
   const [state, setState] = useState({
     isLoading: false,
@@ -39,12 +39,12 @@ function App() {
 
   const formToSubmit = (student) => {
     editStudent(student.studentId, student)
-      .then(() => {
-        closeEditStudentModal();
-        window.location.reload(true);
-      })
+      .then(() => closeEditStudentModal())
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        closeEditStudentModal();
       });
   };
 

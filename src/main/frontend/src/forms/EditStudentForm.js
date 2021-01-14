@@ -3,12 +3,12 @@ import { Formik } from "formik";
 import { Input, Button, Tag } from "antd";
 import "./AddStudentForm.css";
 
-const EditStudentForm = ({ initialV, submitter }) => (
+const EditStudentForm = ({ singleStudent, submitter }) => (
   <Formik
     initialValues={{
-      firstName: initialV.firstName,
-      lastName: initialV.lastName,
-      email: initialV.email,
+      firstName: singleStudent.firstName,
+      lastName: singleStudent.lastName,
+      email: singleStudent.email,
     }}
     validate={(values) => {
       const errors = {};

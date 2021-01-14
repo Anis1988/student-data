@@ -4,8 +4,11 @@ import React from "react";
 const ViewStudent = ({ studentsCourses, view, closeView }) => {
   return (
     <Modal
+      style={{ backgroundColor: "gray" }}
       title={
-        <h1 style={{ textDecoration: "underline" }}>View Student Details</h1>
+        <h1 style={{ marginTop: "15px", fontWeight: "800" }}>
+          VIEW STUDENTS DETAILS
+        </h1>
       }
       visible={view}
       onOk={() => closeView()}

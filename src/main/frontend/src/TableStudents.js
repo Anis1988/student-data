@@ -108,7 +108,11 @@ const TableStudents = ({
       />
       {/* for adding  */}
       <Modal
-        title="Add New Student"
+        title={
+          <h1 style={{ marginTop: "15px", fontWeight: "800" }}>
+            ADD NEW STUDENTS
+          </h1>
+        }
         visible={modal}
         onOk={() => closeAddStudentModal()}
         onCancel={() => closeAddStudentModal()}
@@ -129,13 +133,18 @@ const TableStudents = ({
 
       {/* for edit  */}
       <Modal
-        title="Edit Student"
+        title={
+          <h1 style={{ marginTop: "15px", fontWeight: "800" }}>EDIT STUDENT</h1>
+        }
         visible={modalEdit}
         onOk={() => closeEditStudentModal()}
         onCancel={() => closeEditStudentModal()}
         width={1000}
       >
-        <EditStudentForm initialV={singleStudent} submitter={formToSubmit} />
+        <EditStudentForm
+          singleStudent={singleStudent}
+          submitter={formToSubmit}
+        />
       </Modal>
       <Footer
         numberOfStudents={students.length}
