@@ -75,12 +75,12 @@ const TableStudents = ({
               Delete
             </Button>
           </Popconfirm>
-          <Button
+          {/* <Button
             style={{ marginLeft: "5px" }}
             onClick={() => handleEdit(record)}
           >
             Edit
-          </Button>
+          </Button> */}
           <Button
             style={{ marginLeft: "5px" }}
             type="primary"

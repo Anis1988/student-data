@@ -1,6 +1,12 @@
+spring:
+  profiles:
+    active: "@spring.profiles.active @"
+
+server:
+  port: 5000
 app:
   datasource:
-    jdbc-url: jdbc:postgresql://localhost:5432/anismedini
-    username: postgres
-    password: password
+    jdbc-url: jdbc:postgresql://fullstackbootdb2.cnuhb8l2lidu.us-west-1.rds.amazonaws.com:5432/anismedini
+    username: anis1011
+    password: password1234
     pool-size: 30

@@ -1,7 +1,6 @@
 package com.anis.studentdata.student;
 
 
-import com.anis.studentdata.exception.ApiRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +8,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
-@RequestMapping("/students")
+@RequestMapping("api/students")
 @RestController
 @CrossOrigin("*")
 @RequiredArgsConstructor
